@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:my_notes/presentation/pages/balanace_page.dart';
+import 'package:my_notes/repositories/balance_week_repository.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => BalanceWeekRepository(),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,8 +26,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.indigo,
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 30,
+            fontFamily: "verdana_regular",
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        scaffoldBackgroundColor: Colors.grey.shade300,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const BalancePage(),
     );
   }
 }

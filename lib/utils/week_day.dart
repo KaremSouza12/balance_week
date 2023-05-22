@@ -7,16 +7,17 @@ extension DateTimeExtension on DateTime {
       4: "Quinta-Feira",
       5: "Sexta-Feira",
       6: "Sábado",
-      7: "Somingo"
+      7: "Domingo"
     };
     return weekdayName[weekday];
   }
 
   String? getData() {
     final name = DateTime.now().weekdayName();
-    final day = DateTime.now().weekday;
+    final day = DateTime.now().day;
     final month = DateTime.now().month;
+    final year = DateTime.now().year;
 
-    return "$day/$month - $name";
+    return "$day/$month/$year";
   }
 }

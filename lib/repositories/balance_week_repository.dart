@@ -1,38 +1,75 @@
-import 'package:my_notes/datasource/data_base_actions.dart';
-import 'package:my_notes/models/balance_week.dart';
-import 'package:my_notes/repositories/balance_week_interface.dart';
+import 'package:flutter/material.dart';
+import 'package:my_notes/datasource/data_base.dart';
+import 'package:sqflite/sqflite.dart';
 
-class BalanceWeekRepository implements IBalanceWeek {
-  BalanceWeekRepository({required this.actions});
+import '../models/balance_week.dart';
 
-  final DataBaseActions actions;
+class BalanceWeekRepository extends ChangeNotifier {
+  late Database db;
+  List<BalanceWeek> _balanceWeek = [];
 
-  @override
-  Future<List<BalanceWeek>> getAll() async {
-    final items = actions.getAllBalances();
-    return items.map((item) => BalanceWeek.fromMap(items)).toList();
+  List<BalanceWeek> get balanceWeek => _balanceWeek;
+
+  BalanceWeekRepository() {
+    _initRepository();
   }
 
-  @override
-  Future<BalanceWeek?> getOne(int id) async {
-    final item = await actions.findOneItem(id);
-    return item != null ? BalanceWeek.fromMap(item) : null;
+  _initRepository() async {
+    await _getAllBalances();
   }
 
-  @override
-  Future<void> insert(BalanceWeek balanceWeek) async {
-    await actions.createDta(balanceWeek);
+  _getAllBalances() async {
+    db = await DB.instance.database;
+    final List<Map<String, dynamic>> data = await db.query(
+      'balance',
+    );
+
+    _balanceWeek = List.generate(
+      data.length,
+      (i) {
+        return BalanceWeek(
+          id: data[i]['id'],
+          nameDayWeek: data[i]['nameDayWeek'],
+          dateOfDayWeek: data[i]['dateOfDayWeek'],
+          totalWeek: data[i]['totalWeek'],
+          valueOfDayWeek: data[i]['valueOfDayWeek'],
+        );
+      },
+    );
+    print(_balanceWeek);
+    notifyListeners();
   }
 
-  @override
-  Future<void> update(BalanceWeek balanceWeek) {
-    // TODO: implement update
-    throw UnimplementedError();
+  getDaysWeek() async {
+    db = await DB.instance.database;
+    var now = new DateTime.now();
+    var now_1w = now.subtract(Duration(days: 7));
+    final data = await db
+        .query('balance', where: "dateOfDayWeek=?", whereArgs: [now_1w]);
+
+    print(data.toString());
   }
 
-  @override
-  Future<void> delete(int id) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  findOneItem(int? id) async {
+    db = await DB.instance.database;
+    final info = await db.query('balance', where: "id=?", whereArgs: [id]);
+    if (info.isNotEmpty) {
+      return BalanceWeek.fromMap(info.first);
+    }
+
+    return null;
+  }
+
+  createData(BalanceWeek balanceWeek) async {
+    db = await DB.instance.database;
+
+    final id = await db.insert(
+      'balance',
+      balanceWeek.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    _getAllBalances();
+    notifyListeners();
+    return id;
   }
 }

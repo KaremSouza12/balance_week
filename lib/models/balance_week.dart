@@ -2,8 +2,8 @@ class BalanceWeek {
   int? id;
   String? nameDayWeek;
   String? dateOfDayWeek;
-  int? totalWeek;
-  int? valueOfDayWeek;
+  double? totalWeek;
+  double? valueOfDayWeek;
 
   BalanceWeek({
     this.id,
@@ -29,5 +29,10 @@ class BalanceWeek {
     data['totalWeek'] = totalWeek;
     data['valueOfDayWeek'] = valueOfDayWeek;
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'Account{id:$id,nameDayWeek: $nameDayWeek, dateOfDayWeek: $dateOfDayWeek,totalWeek: $totalWeek, valueOfDayWeek:$valueOfDayWeek}';
   }
 }

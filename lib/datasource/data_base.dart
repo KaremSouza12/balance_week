@@ -17,7 +17,7 @@ class DB {
     return openDatabase(
         join(
           await getDatabasesPath(),
-          'balance_week',
+          'balance',
         ),
         onCreate: _onCreate,
         version: 1);
@@ -27,10 +27,6 @@ class DB {
     return db.execute(balenceWeek);
   }
 
-  String get balenceWeek => '''CREATE TABLE balance_week (
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-   name_day_week TEXT, date_of_day_week TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
-   total_week REALL, 
-    value_of_day_week REAL 
-   )''';
+  String get balenceWeek =>
+      '''CREATE TABLE balance (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nameDayWeek TEXT, dateOfDayWeek TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, totalWeek REAL, valueOfDayWeek REAL )''';
 }
