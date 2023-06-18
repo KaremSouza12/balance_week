@@ -1,5 +1,12 @@
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
 extension DateTimeExtension on DateTime {
-  String? weekdayName() {
+  String? weekdayName(String name) {
+    initializeDateFormatting();
+    final now = DateTime.now();
+    final month = now.month < 10 ? "0${now.month}" : now.month;
+
     const Map<int, String> weekdayName = {
       1: "Segunda-Feira",
       2: "Terça-Feira",
@@ -9,15 +16,44 @@ extension DateTimeExtension on DateTime {
       6: "Sábado",
       7: "Domingo"
     };
-    return weekdayName[weekday];
+    if (name == weekdayName[weekday]) {
+      final firstDayOfWeek = now.subtract(Duration(days: now.weekday - 1));
+      // DateFormat(DateFormat.DAY, 'pt-BR')
+      //     .format(firstDayOfWeek.add(Duration(days: weekdayName[weekday])));
+
+      final formattedDate = "${now.day}-$month-${now.year}";
+      return formattedDate.toString();
+    }
+    return '';
   }
 
   String? getData() {
-    final name = DateTime.now().weekdayName();
+    // final name = DateTime.now().weekdayName();
     final day = DateTime.now().day;
     final month = DateTime.now().month;
     final year = DateTime.now().year;
 
     return "$day/$month/$year";
+  }
+
+  Map<String, String> getDaysOfWeek(String? locale) {
+    initializeDateFormatting();
+    final now = DateTime.now();
+    final firstDayOfWeek = now.subtract(Duration(days: now.weekday - 1));
+    final days = List.generate(7, (index) => index).map((value) =>
+        DateFormat(DateFormat.DAY, locale)
+            .format(firstDayOfWeek.add(Duration(days: value))));
+    final weekdayName = <String>[
+      'Segunda-Feira',
+      'Terça-Feira',
+      'Quarta-Feira',
+      'Qunta-Feira',
+      'Sexta-Feira',
+      'Sábado',
+      'Dominfo',
+    ];
+
+    final map = Map<String, String>.fromIterables(days, weekdayName);
+    return map;
   }
 }

@@ -28,12 +28,12 @@ class BalanceWeekRepository extends ChangeNotifier {
       data.length,
       (i) {
         return BalanceWeek(
-          id: data[i]['id'],
-          nameDayWeek: data[i]['nameDayWeek'],
-          dateOfDayWeek: data[i]['dateOfDayWeek'],
-          totalWeek: data[i]['totalWeek'],
-          valueOfDayWeek: data[i]['valueOfDayWeek'],
-        );
+            id: data[i]['id'],
+            nameDayWeek: data[i]['nameDayWeek'],
+            dateOfDayWeek: data[i]['dateOfDayWeek'],
+            totalday: data[i]['totalday'],
+            valueOfDayWeek: data[i]['valueOfDayWeek'],
+            hourOfDayWeek: data[i]['hourOfDayWeek']);
       },
     );
     print(_balanceWeek);

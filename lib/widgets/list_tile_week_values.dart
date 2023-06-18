@@ -32,6 +32,5 @@ class ListTileWeekValues extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }
