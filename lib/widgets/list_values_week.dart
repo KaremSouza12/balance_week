@@ -17,9 +17,15 @@ class ListValuesWeek extends StatelessWidget {
         itemCount: repository.balanceWeek.length,
         itemBuilder: (_, index) {
           final balance = repository.balanceWeek[index];
-          final len = repository.balanceWeek.length;
-          return ListTileWeekValues(
-            balance: balance,
+          // final len = repository.balanceWeek.length;
+          return Dismissible(
+            key: Key(balance.toString()),
+            background: const Card(
+              color: Colors.blue,
+            ),
+            child: ListTileWeekValues(
+              balance: balance,
+            ),
           );
         },
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_notes/models/balance_week.dart';
 import 'package:my_notes/repositories/balance_week_repository.dart';
+import 'package:my_notes/utils/week_day.dart';
 import 'package:provider/provider.dart';
 
 List<String> list = <String>[
@@ -38,19 +39,21 @@ class _EnterFormValueState extends State<EnterFormValue> {
 
   String getDate() {
     final now = DateTime.now();
-    if (now.hour == 00 || now.hour <= 06) {
+    if (now.hour == 0 || now.hour <= 02 || _name != now.weekdayName()) {
       final yesterday = DateTime.now().subtract(const Duration(days: 1));
       final month =
           yesterday.month < 10 ? "0${yesterday.month}" : yesterday.month;
 
       final formattedDate = "${yesterday.day}-$month-${yesterday.year}";
 
-      print('DATA DE OTEM: $formattedDate');
+      print('DATA DE OTEM: ${now.weekday}');
       return formattedDate.toString();
     } else {
       final month = now.month < 10 ? "0${now.month}" : now.month;
 
       final currentDate = "${now.day}-$month-${now.year}";
+
+      print('Teste:${now.weekdayName()}');
 
       return currentDate.toString();
     }
@@ -104,6 +107,7 @@ class _EnterFormValueState extends State<EnterFormValue> {
         Padding(
           padding: const EdgeInsets.all(16),
           child: TextFormField(
+            keyboardType: TextInputType.number,
             controller: widget.balance,
             style: const TextStyle(
               fontSize: 24,

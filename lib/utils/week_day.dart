@@ -2,10 +2,10 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 extension DateTimeExtension on DateTime {
-  String? weekdayName(String name) {
+  String? weekdayName() {
     initializeDateFormatting();
-    final now = DateTime.now();
-    final month = now.month < 10 ? "0${now.month}" : now.month;
+    // final now = DateTime.now();
+    // final month = now.month < 10 ? "0${now.month}" : now.month;
 
     const Map<int, String> weekdayName = {
       1: "Segunda-Feira",
@@ -16,15 +16,7 @@ extension DateTimeExtension on DateTime {
       6: "Sábado",
       7: "Domingo"
     };
-    if (name == weekdayName[weekday]) {
-      final firstDayOfWeek = now.subtract(Duration(days: now.weekday - 1));
-      // DateFormat(DateFormat.DAY, 'pt-BR')
-      //     .format(firstDayOfWeek.add(Duration(days: weekdayName[weekday])));
-
-      final formattedDate = "${now.day}-$month-${now.year}";
-      return formattedDate.toString();
-    }
-    return '';
+    return weekdayName[weekday];
   }
 
   String? getData() {
