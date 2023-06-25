@@ -111,13 +111,7 @@ class _UpdateFormState extends State<UpdateForm> {
                   ),
                 ),
                 onTap: () async {
-                  DateTime? date = DateTime(1900);
                   FocusScope.of(context).requestFocus(FocusNode());
-                  date = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime(2100));
 
                   // widget.dueDateController.text =
                   //     utilsServices.formatDateTime(date!);
