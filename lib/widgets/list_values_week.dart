@@ -25,6 +25,8 @@ class ListValuesWeek extends StatelessWidget {
             ),
             child: ListTileWeekValues(
               balance: balance,
+              repository: repository,
+              id: balance.id,
             ),
           );
         },
