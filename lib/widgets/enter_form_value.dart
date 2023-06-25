@@ -62,7 +62,6 @@ class _EnterFormValueState extends State<EnterFormValue> {
   @override
   Widget build(BuildContext context) {
     final repository = context.watch<BalanceWeekRepository>();
-    double valuetotal = 0.0;
     final getcurrentdate = DateTime.now();
     String hour =
         "${getcurrentdate.hour}:${getcurrentdate.minute}:${getcurrentdate.second}";
@@ -72,7 +71,6 @@ class _EnterFormValueState extends State<EnterFormValue> {
       for (var element in repository.balanceWeek) {
         total += element.totalday as double;
       }
-      valuetotal = total;
       return total;
     }
 
