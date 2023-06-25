@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:my_notes/presentation/pages/balanace_page.dart';
+import 'package:my_notes/presentation/pages/splash_screen.dart';
 import 'package:my_notes/repositories/balance_week_repository.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.grey.shade300,
       ),
-      home: const BalancePage(),
+      home: const SplashScreen(),
     );
   }
 }
