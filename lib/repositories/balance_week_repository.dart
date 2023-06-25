@@ -72,4 +72,45 @@ class BalanceWeekRepository extends ChangeNotifier {
     notifyListeners();
     return id;
   }
+
+  deleteData(int? id) async {
+    db = await DB.instance.database;
+    await db.delete('balance', where: 'id = ?', whereArgs: [id]);
+    db.close();
+    _getAllBalances();
+    notifyListeners();
+  }
+
+  getItem(int? id) async {
+    final db = await DB.instance.database;
+    final info = await db.query('balance', where: "id=?", whereArgs: [id]);
+    if (info.isNotEmpty) {
+      return BalanceWeek.fromMap(info.first);
+    }
+
+    return null;
+  }
+
+  updateValues(
+    int? id,
+    String? nameDayWeek,
+    String? dateOfDayWeek,
+    double? totalday,
+    double? valueOfDayWeek,
+    String? hourOfDayWeek,
+  ) async {
+    final db = await DB.instance.database;
+
+    final account = BalanceWeek(
+      nameDayWeek: nameDayWeek,
+      dateOfDayWeek: dateOfDayWeek,
+      totalday: totalday,
+      valueOfDayWeek: valueOfDayWeek,
+      hourOfDayWeek: hourOfDayWeek,
+    );
+    db.update('balance', account.toMap(), where: 'id=?', whereArgs: [id]);
+    db.close();
+    notifyListeners();
+    _getAllBalances();
+  }
 }
