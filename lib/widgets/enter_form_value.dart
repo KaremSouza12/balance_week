@@ -167,8 +167,7 @@ class _EnterFormValueState extends State<EnterFormValue> {
                   textColor: Colors.white,
                   fontSize: 16.0,
                 );
-              } else {
-                print(valuetotal);
+              } else if (_name != '') {
                 widget.repository.createData(
                   BalanceWeek(
                     nameDayWeek: _name,
@@ -188,6 +187,16 @@ class _EnterFormValueState extends State<EnterFormValue> {
                   fontSize: 16.0,
                 );
                 widget.balance.text = '';
+              } else {
+                Fluttertoast.showToast(
+                  msg: "Dia da semana não selecionado",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.TOP,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.black38,
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
               }
             },
             child: const Text(
